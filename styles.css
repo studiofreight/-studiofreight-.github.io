@@ -1,0 +1,28 @@
+html
+body {
+	box-sizing: border-box;
+	margin: 0;
+	height: 100%;
+	background: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: sans-serif;
+}
+
+.image-container {
+	display: flex;
+	height: 50%;
+	max-width: 50%;
+	position: relative;
+}
+.canvas {
+	width: auto;
+	max-height: 50%;
+	max-width: 100%;
+	display: block;
+    margin: 0, auto;
+  
+
+
+}
