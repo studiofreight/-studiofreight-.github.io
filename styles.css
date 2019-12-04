@@ -12,8 +12,8 @@ body {
 
 .image-container {
         display: flex;
-	height: 50%;
-	max-width: 50%;
+	height: 100%;
+	max-width: 100%;
 	position: relative;
 }
 .canvas {
