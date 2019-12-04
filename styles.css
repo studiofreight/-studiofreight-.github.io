@@ -8,7 +8,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	font-family: sans-serif;
-	background: black;
+
 }
 
 .image-container {
@@ -16,7 +16,7 @@ body {
 	height: auto;
 	max-width: 100%;
 	position: relative;
-	background: black;
+	
 }
 .canvas {
 	width: auto;
@@ -24,6 +24,6 @@ body {
 	max-width: 100%;
 	display: block;
 	margin: 0, auto;
-	background: black;
+
   
 }
