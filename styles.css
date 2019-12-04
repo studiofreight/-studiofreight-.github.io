@@ -11,6 +11,7 @@ body {
 }
 
 .image-container {
+        display: flex;
 	height: 50%;
 	max-width: 50%;
 	position: relative;
