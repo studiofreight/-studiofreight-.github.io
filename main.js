@@ -28,9 +28,9 @@ var layer_list = [
 		'image': shadow,
 		'src': './images/layer_1_1.png',
 		'z_index': -.05,
-		'position': {x: 0, y: 0},
+		'position': {x: 50, y: 0},
 		'blend': null,
-		'opacity': 1
+		'opacity': .5
     },
     
     {
@@ -45,7 +45,7 @@ var layer_list = [
     {
 		'image': interface,
 		'src': './images/layer_3_1.png',
-		'z_index': 0,
+		'z_index': .05,
 		'position': {x: 0, y: 0},
 		'blend': null,
 		'opacity': 1
@@ -134,16 +134,16 @@ function getOffset(layer) {
 // Initialize variables for touch and mouse-based parallax
 
 // This is a variable we're using to only move things when you're touching the screen or holding the mouse button down.
-var moving = false;
+var moving = true;
 
 // Initialize touch and mouse position
 var pointer_initial = {
-	x: 10,
-	y: 10
+	x: 1000,
+	y: 1000
 };
 var pointer = {
-	x: 0,
-	y: 0
+	x: 1000,
+	y: 1000
 };
 
 
@@ -214,10 +214,10 @@ canvas.addEventListener('mousemove', function(event) {
 });
 
 // Listen for when you stop touching the screen
-window.addEventListener('touchend', function(event) {
+//window.addEventListener('touchend', function(event) {
 	// Run the endGesture function (below)
-	endGesture();
-});
+//	endGesture();
+//});
 // Listen for when you release the mouse button anywhere on the screen
 window.addEventListener('mouseup', function(event) {
 	// Run the endGesture function (below)
@@ -225,10 +225,78 @@ window.addEventListener('mouseup', function(event) {
 });
 
 
-function endGesture() {
-	// You aren't touching or clicking anymore, so set this back to false
-	moving = false;
+// function endGesture() {
+// 	// You aren't touching or clicking anymore, so set this back to false
+// 	moving = false;
 	
-	pointer.x = 0;
-	pointer.y = 0;
+// 	pointer.x = 0;
+// 	pointer.y = 0;
+// }
+
+
+// This is where we listen to the gyroscope position
+window.addEventListener('deviceorientation', function(event) {
+	// If this is the first run through here, set the initial position of the gyroscope
+	if (!motion_initial.x && !motion_initial.y) {
+		motion_initial.x = event.beta;
+		motion_initial.y = event.gamma;
+	}
+	
+	// Depending on what orientation the device is in, you need to adjust what each gyroscope axis means
+	// This can be a bit tricky
+    if (window.orientation === 0) {
+    	// The device is right-side up in portrait orientation
+    	motion.x = event.gamma - motion_initial.y;
+    	motion.y = event.beta - motion_initial.x;
+    } else if (window.orientation === 90) {
+    	// The device is in landscape laying on its left side
+    	motion.x = event.beta - motion_initial.x;
+    	motion.y = -event.gamma + motion_initial.y;
+    } else if (window.orientation === -90) {
+    	// The device is in landscape laying on its right side
+    	motion.x = -event.beta + motion_initial.x;
+    	motion.y = event.gamma - motion_initial.y;
+    } else {
+    	// The device is upside-down in portrait orientation
+		motion.x = -event.gamma + motion_initial.y;
+		motion.y = -event.beta + motion_initial.x;
+    }
+
+	// This is optional, but prevents things from moving too far (because these are 2d images it can look broken)
+	var max_offset = 23;
+    
+    // Check if magnitude of motion offset along X axis is greater than your max setting
+    if (Math.abs(motion.x) > max_offset) {
+    	// Check whether offset is positive or negative, and make sure to keep it that way
+    	if (motion.x < 0) {
+    		motion.x = -max_offset;
+    	} else {
+    		motion.x = max_offset;
+    	}
+    }
+    // Check if magnitude of motion offset along Y axis is greater than your max setting
+    if (Math.abs(motion.y) > max_offset) {
+    	// Check whether offset is positive or negative, and make sure to keep it that way
+    	if (motion.y < 0) {
+    		motion.y = -max_offset;
+    	} else {
+    		motion.y = max_offset;
+    	}
+    }
+});
+
+// Reset the position of motion controls when device changes between portrait and landscape, etc.
+window.addEventListener('orientationchange', function(event) {
+	motion_initial.x = 0;
+	motion_initial.y = 0;
+});
+
+window.addEventListener('touchend', function() {
+	enableMotion();	
+});
+
+function enableMotion() {
+	if (window.DeviceOrientationEvent && DeviceOrientationEvent.requestPermission) {
+		DeviceOrientationEvent.requestPermission();
+	}
 }
