@@ -26,7 +26,7 @@ var collage = new Image();
 var layer_list = [
 	{
 		'image': shadow,
-		'src': './images/layer_1_1.png',
+		'src': './images/layer_1_1.svg',
 		'z_index': -.05,
 		'position': {x: 0, y: 0},
 		'blend': null,
@@ -35,7 +35,7 @@ var layer_list = [
     
     {
 		'image': square,
-		'src': './images/layer_2_1.png',
+		'src': './images/layer_2_1.svg',
 		'z_index': -.05,
 		'position': {x: 0, y: 0},
 		'blend': null,
@@ -44,7 +44,7 @@ var layer_list = [
 
     {
 		'image': interface,
-		'src': './images/layer_3_1.png',
+		'src': './images/layer_3_1.svg',
 		'z_index': 0,
 		'position': {x: 0, y: 0},
 		'blend': null,
@@ -53,7 +53,7 @@ var layer_list = [
 
     {
 		'image': collage,
-		'src': './images/layer_4_1.png',
+		'src': './images/layer_4_1.svg',
 		'z_index': .15,
 		'position': {x: 0, y: 0},
 		'blend': null,
